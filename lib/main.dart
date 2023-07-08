@@ -1,8 +1,8 @@
-import 'package:book_now/app_constants/app_strings.dart';
+import 'package:book_now/bloc/authetication_bloc/authentication_bloc.dart';
 import 'package:book_now/bloc/blocDelegate.dart';
-import 'package:book_now/bloc/connectivity/connectivity_bloc.dart';
+import 'package:book_now/bloc/connectivity_bloc/connectivity_bloc.dart';
+import 'package:book_now/repositories/user_repository.dart';
 import 'package:book_now/ui/loading_screen.dart';
-import 'package:book_now/utils/toses.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,26 +14,35 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Bloc.observer = SimpleBlocObserver();
-  runApp(BlocProvider(
-      create: (context) => ConnectivityBloc(), child: const MyApp()));
+  final userRepository = UserRepository();
+  // runApp(BlocProvider(
+  //     create: (context) => ConnectivityBloc(), child: const MyApp()));
+
+  runApp(MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ConnectivityBloc()),
+        BlocProvider(create: (context) => AuthenticationBloc(userRepository: userRepository )),
+      ],
+      child: MyApp(userRepository: userRepository)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  final UserRepository _userRepository;
+   const MyApp({super.key, required UserRepository userRepository}) : _userRepository = userRepository;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(title: 'Book Now'),
+    return MaterialApp(
+      home: MyHomePage(userRepository: _userRepository),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  final String title;
+  final UserRepository _userRepository;
 
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required UserRepository userRepository})
+      : _userRepository = userRepository;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -41,12 +50,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late ConnectivityBloc _connectivityBloc;
+  late AuthenticationBloc _authenticationBloc;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _connectivityBloc = BlocProvider.of<ConnectivityBloc>(context);
+    _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
   }
   @override
   Widget build(BuildContext context) {
@@ -58,16 +69,34 @@ class _MyHomePageState extends State<MyHomePage> {
             return const LoadingScreen();
           }
           if(connectionState is Connected){
-            return const Scaffold(
-              body: Center(
-                child: Text('Connected'),
-              ),
-            );
-
+            print('connected');
+            return BlocBuilder(
+              bloc: _authenticationBloc,
+                builder: (context, authState) {
+                if(authState is AuthenticationInitial){
+                  _authenticationBloc.add(AppStarted());
+                  return const LoadingScreen();
+                }
+              if (authState is Uninitialized) {
+                return const LoadingScreen();
+              }
+              if (authState is Authenticated) {
+                return const Scaffold(
+                  body: Center(
+                    child: Text('Connected'),
+                  ),
+                );
+              }
+              if (authState is Unauthenticated) {
+                return const LoadingScreen();
+              }
+              return const LoadingScreen();
+            });
           }
-          showFailureTos(AppStrings.noInternet, context);
+          // showFailureTos(AppStrings.noInternet, context);
           return const LoadingScreen();
 
     });
   }
+
 }
