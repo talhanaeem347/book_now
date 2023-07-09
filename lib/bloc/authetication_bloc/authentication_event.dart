@@ -9,13 +9,6 @@ abstract class AuthenticationEvent extends Equatable {
 
 class AppStarted extends AuthenticationEvent {}
 
-class LoggedIn extends AuthenticationEvent {
-  final String userId;
-
-  const LoggedIn({required this.userId});
-
-  @override
-  List<Object> get props => [userId];
-}
+class LoggedIn extends AuthenticationEvent {}
 
 class LoggedOut extends AuthenticationEvent {}
