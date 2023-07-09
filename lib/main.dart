@@ -2,7 +2,8 @@ import 'package:book_now/bloc/authetication_bloc/authentication_bloc.dart';
 import 'package:book_now/bloc/blocDelegate.dart';
 import 'package:book_now/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:book_now/repositories/user_repository.dart';
-import 'package:book_now/ui/loading_screen.dart';
+import 'package:book_now/ui/Screens/loading_screen.dart';
+import 'package:book_now/ui/Screens/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +52,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late ConnectivityBloc _connectivityBloc;
   late AuthenticationBloc _authenticationBloc;
-
+  get _userRepository => widget._userRepository;
   @override
   void initState() {
     // TODO: implement initState
@@ -69,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
             return const LoadingScreen();
           }
           if(connectionState is Connected){
-            print('connected');
             return BlocBuilder(
               bloc: _authenticationBloc,
                 builder: (context, authState) {
@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               }
               if (authState is Unauthenticated) {
-                return const LoadingScreen();
+                return SignUpScreen(userRepository:_userRepository,);
               }
               return const LoadingScreen();
             });
