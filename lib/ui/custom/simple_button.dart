@@ -9,7 +9,7 @@ class SimpleButton extends StatelessWidget {
   final bool isEnable;
 
   const SimpleButton(
-      {super.key, required this.label, this.onPressed, required this.isEnable});
+      {super.key, required this.label, this.onPressed,  this.isEnable = true});
 
   @override
   Widget build(BuildContext context) {

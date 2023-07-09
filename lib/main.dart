@@ -3,7 +3,9 @@ import 'package:book_now/bloc/blocDelegate.dart';
 import 'package:book_now/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:book_now/repositories/user_repository.dart';
 import 'package:book_now/ui/Screens/loading_screen.dart';
+import 'package:book_now/ui/Screens/log_in.dart';
 import 'package:book_now/ui/Screens/sign_up.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(userRepository: _userRepository),
     );
   }
@@ -81,14 +84,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 return const LoadingScreen();
               }
               if (authState is Authenticated) {
-                return const Scaffold(
+                return  Scaffold(
                   body: Center(
-                    child: Text('Connected'),
+                    child: TextButton(
+                        onPressed: ()
+                        {
+                          FirebaseAuth.instance.signOut();
+                        },
+                        child: const Text('Connected')),
                   ),
                 );
               }
               if (authState is Unauthenticated) {
-                return SignUpScreen(userRepository:_userRepository,);
+                return LogInScreen(userRepository:_userRepository);
               }
               return const LoadingScreen();
             });
