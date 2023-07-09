@@ -1,16 +1,27 @@
-# book_now
 
-A new Flutter project.
+# Book_Now
 
+## Description
+    An application that allows users to book a AriLine ticket.
+
+## Technologies
+    * Flutter
+    * Dart
+    * Firebase
+    * Google Cloud Platform
+    * BLoC Pattern
+    * Equatable
+
+## Features
+    * Authentication
+    
+    
 ## Getting Started
+    * Clone the 'git clone https://github.com/talhanaeem347/ideal_playground.git'
+    * Run `flutter pub get` to install packages
+    * Run `flutter run` to start the application
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+    |Loading|SignUp|SignIn|
+    |:---:|:---:|:---:|
+    |![Loading](/screenshots/loading.png)|![SignUp](/screenshots/signup.png)|![SignIn](/screenshots/signin.png)|    

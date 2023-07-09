@@ -1,40 +1,43 @@
 import 'package:book_now/app_constants/app_colors.dart';
 import 'package:book_now/app_constants/app_padding.dart';
 import 'package:book_now/app_constants/app_strings.dart';
+import 'package:book_now/app_constants/app_text_style.dart';
 import 'package:book_now/bloc/authetication_bloc/authentication_bloc.dart';
-import 'package:book_now/bloc/sign_up_bloc/sign_up_bloc.dart';
+import 'package:book_now/bloc/log_in_bloc/log_in_bloc.dart';
 import 'package:book_now/repositories/user_repository.dart';
+import 'package:book_now/ui/Screens/sign_up.dart';
 import 'package:book_now/ui/custom/custom_text_field.dart';
 import 'package:book_now/ui/custom/simple_button.dart';
 import 'package:book_now/utils/toses.dart';
+import 'package:book_now/utils/turn_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUpForm extends StatefulWidget {
+class LogInForm extends StatefulWidget {
   final UserRepository userRepository;
 
-  const SignUpForm({super.key, required this.userRepository});
+  const LogInForm({super.key, required this.userRepository});
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  State<LogInForm> createState() => _LogInFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _LogInFormState extends State<LogInForm> {
   get userRepository => widget.userRepository;
-  late SignUpBloc _signUpBloc;
+  late LogInBloc _logInBloc;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _signUpBloc = SignUpBloc(userRepository: userRepository);
+    _logInBloc = LogInBloc(userRepository: userRepository);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener(
-      bloc: _signUpBloc,
-      listener: (context, SignUpState state) {
+      bloc: _logInBloc,
+      listener: (context, LogInState state) {
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
         }
@@ -46,8 +49,8 @@ class _SignUpFormState extends State<SignUpForm> {
         }
       },
       child: BlocBuilder(
-        bloc: _signUpBloc,
-        builder: (context, SignUpState state) {
+        bloc: _logInBloc,
+        builder: (context, LogInState state) {
           return Container(
             padding: const EdgeInsets.all(AppPadding.normal),
             decoration: BoxDecoration(
@@ -56,32 +59,11 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             child: Column(
               children: [
-                CustomTextField(
-                  label: AppStrings.userName,
-                  onChanged: (value) {
-                    _signUpBloc.add(UsernameChanged(userName: value));
-                  },
-                  validator: (value) {
-                    return !state.isUserName
-                        ? AppStrings.invalidUserName
-                        : null;
-                  },
-                ),
-                const SizedBox(height: AppPadding.normal),
-                CustomTextField(
-                  label: AppStrings.family,
-                  onChanged: (value) {
-                    _signUpBloc.add(FamilyChanged(family: value));
-                  },
-                  validator: (value) {
-                    return !state.isFamily ? AppStrings.invalidFamily : null;
-                  },
-                ),
                 const SizedBox(height: AppPadding.normal),
                 CustomTextField(
                   label: AppStrings.email,
                   onChanged: (value) {
-                    _signUpBloc.add(SignUpEmailChanged(email: value));
+                    _logInBloc.add(LogInEmailChanged(email: value));
                   },
                   validator: (value) {
                     return !state.isEmail ? AppStrings.invalidEmail : null;
@@ -92,24 +74,41 @@ class _SignUpFormState extends State<SignUpForm> {
                   isPassword: true,
                   label: AppStrings.password,
                   onChanged: (value) {
-                    _signUpBloc.add(SignUpPasswordChanged(password: value));
+                    _logInBloc.add(LogInPasswordChanged(password: value));
                   },
                   validator: (value) {
                     return !state.isPassword
-                        ? AppStrings.invalidPassword
+                        ? AppStrings.invalidUserName
                         : null;
                   },
                 ),
                 const SizedBox(height: AppPadding.normal),
                 SimpleButton(
-                  label: AppStrings.register,
+                  label: AppStrings.login,
                   isEnable: state.isFormValid,
                   onPressed: () {
                     if (state.isFormValid) {
-                      _signUpBloc.add(SignUpWithEmail());
+                      _logInBloc.add(LogInWithEmail());
                     }
                   },
-                )
+                ),
+                const SizedBox(height: AppPadding.normal),
+                Text(
+                  AppStrings.wantToRegister,
+                  style: AppStyle.labelStyle,
+                ),
+                const SizedBox(height: AppPadding.normal),
+                SimpleButton(
+                  label: AppStrings.register,
+
+                  onPressed: () {
+                    TurnPage.pushScreen(context, SignUpScreen(userRepository: userRepository));
+
+                  }
+
+
+
+                ),
               ],
             ),
           );

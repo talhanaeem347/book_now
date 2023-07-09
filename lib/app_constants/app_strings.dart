@@ -1,9 +1,6 @@
 
 class AppStrings{
 
-
-
-
   static String get appName => "Book Now";
   static String get connected => "Connected";
   static String get loading => "Loading";
@@ -17,6 +14,9 @@ class AppStrings{
   static String get password => "Password";
   static String get invalidPassword => "Invalid Password";
   static String get register => "Register";
+  static String get login => "Login";
+  static String get logout => "Logout";
+  static String get wantToRegister => "do you want to register?";
 
 
 }
