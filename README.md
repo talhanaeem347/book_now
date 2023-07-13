@@ -2,7 +2,7 @@
 # Book_Now
 
 ## Description
-    An application that allows users to book a AriLine ticket.
+    An application that allows users to book an airline ticket.
 
 ## Technologies
     * Flutter
@@ -24,4 +24,4 @@
 ## Screenshots
     |Loading|SignUp|SignIn|
     |:---:|:---:|:---:|
-    |![Loading](/screenshots/loading.png)|![SignUp](/screenshots/signup.png)|![SignIn](/screenshots/signin.png)|    
+    |![Loading](screenshots/loading.png)|![SignUp](screenshots/signup.png)|![SignIn](screenshots/signin.png)|    
