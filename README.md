@@ -27,4 +27,5 @@
     | ![Loading](/screenshots/loading.png)| ![SignUp](/screenshots/signUp.png)|![SignIn](/screenshots/login.png)|   
 
 
-## Figma File: `https://www.figma.com/file/WLN2YBnBp7D3jyZKjqFaB9/Online-Booking-(Community)?type=design&node-id=0-1&mode=design&t=XdyXgjpCi0lu7rB3-0`
+## Figma File
+`https://www.figma.com/file/WLN2YBnBp7D3jyZKjqFaB9/Online-Booking-(Community)?type=design&node-id=0-1&mode=design&t=XdyXgjpCi0lu7rB3-0`
