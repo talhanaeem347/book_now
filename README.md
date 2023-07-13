@@ -23,5 +23,5 @@
 
 ## Screenshots
     |Loading|SignUp|SignIn|
-    |:---:|:---:|:---:|
-    |![Loading](screenshots/loading.png)|![SignUp](screenshots/signup.png)|![SignIn](screenshots/signin.png)|    
+    |-----|-----|-----|
+    | ![Loading](/screenshots/loading.png)| ![SignUp](/screenshots/signUp.png)|![SignIn](/screenshots/login.png)|    
