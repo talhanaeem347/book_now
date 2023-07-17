@@ -17,6 +17,10 @@ class AppStrings{
   static String get login => "Login";
   static String get logout => "Logout";
   static String get wantToRegister => "do you want to register?";
+  static String get menu => "Menu";
+  static String get contactUs => "Contact Us";
+  static String get faq => "FAQ";
+  static String get airLineInformation => "Airline Information";
 
 
 }

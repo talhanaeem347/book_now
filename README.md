@@ -23,8 +23,8 @@
 
 ## Screenshots
     |Loading|SignUp|SignIn|
-    |-----|-----|-----|
-    | ![Loading](/screenshots/loading.png)| ![SignUp](/screenshots/signUp.png)|![SignIn](/screenshots/login.png)|   
+    |-------|------|------|
+    |![Loading](/screenshots/loading.png)|![SignUp](/screenshots/signUp.png)|![LogIn](/screenshots/login.png)|   
 
 
 ## Figma File

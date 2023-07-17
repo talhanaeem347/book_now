@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'firebase_options.dart';
+import 'ui/Screens/menu_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,16 +85,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 return const LoadingScreen();
               }
               if (authState is Authenticated) {
-                return  Scaffold(
-                  body: Center(
-                    child: TextButton(
-                        onPressed: ()
-                        {
-                          FirebaseAuth.instance.signOut();
-                        },
-                        child: const Text('Connected')),
-                  ),
-                );
+               return const MenuScreen();
+                // return  Scaffold(
+                //   body: Center(
+                //     child: TextButton(
+                //         onPressed: ()
+                //         {
+                //           FirebaseAuth.instance.signOut();
+                //         },
+                //         child: const Text('Connected')),
+                //   ),
+                // );
               }
               if (authState is Unauthenticated) {
                 return LogInScreen(userRepository:_userRepository);
